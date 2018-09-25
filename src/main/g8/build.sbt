@@ -6,7 +6,7 @@ lazy val root = (project in file(".")).
     inThisBuild(List(
       organization := "$organization$",
       scalaVersion := "2.11.8"
-      mainClass in Compile := Some("$organization$.$name$.$package$.$mainClassName$")
+      mainClass in Compile := Some("$organization$.$name$.$package$.$name$")
     )),
     name := "$name$",
     version := "$version$",
