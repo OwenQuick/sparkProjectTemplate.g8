@@ -7,7 +7,7 @@ import org.apache.spark.{SparkConf, SparkContext}
   * sbt "run inputFile.txt outputFile.txt"
   *  (+ select CountingLocalApp when prompted)
   */
-object $name$ () {
+object $name$ {
   def main(args: Array[String]): Unit = {
     println("Hello World!")
   }

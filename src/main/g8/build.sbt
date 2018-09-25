@@ -5,7 +5,7 @@ lazy val root = (project in file(".")).
   settings(
     inThisBuild(List(
       organization := "$organization$",
-      scalaVersion := "2.11.8"
+      scalaVersion := "2.11.8",
       mainClass in Compile := Some("$package$.$name$")
     )),
     name := "$name$",
@@ -59,5 +59,11 @@ lazy val root = (project in file(".")).
         Some("snapshots" at nexus + "content/repositories/snapshots")
       else
         Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+    },
+    mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
+     {
+      case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+      case x => MergeStrategy.first
+     }
     }
   )
