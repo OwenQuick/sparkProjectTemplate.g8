@@ -6,6 +6,7 @@ lazy val root = (project in file(".")).
     inThisBuild(List(
       organization := "$organization$",
       scalaVersion := "2.11.8"
+      mainClass in Compile := Some("$organization$.$name$.$package$.$mainClassName$")
     )),
     name := "$name$",
     version := "$version$",
@@ -27,15 +28,21 @@ lazy val root = (project in file(".")).
 
       "org.scalatest" %% "scalatest" % "3.0.1" % "test",
       "org.scalacheck" %% "scalacheck" % "1.13.4" % "test",
-      "com.holdenkarau" %% "spark-testing-base" % "$sparkVersion$_$sparkTestingbaseRelease$" % "test" 
+      "com.holdenkarau" %% "spark-testing-base" % "$sparkVersion$_$sparkTestingbaseRelease$" % "test"
     ),
+
+    mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
+   {
+    case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+    case x => MergeStrategy.first
+   },
 
     // uses compile classpath for the run task, including "provided" jar (cf http://stackoverflow.com/a/21803413/3827)
     run in Compile := Defaults.runTask(fullClasspath in Compile, mainClass in (Compile, run), runner in (Compile, run)).evaluated,
 
     scalacOptions ++= Seq("-deprecation", "-unchecked"),
     pomIncludeRepository := { x => false },
-    
+
    resolvers ++= Seq(
       "sonatype-releases" at "https://oss.sonatype.org/content/repositories/releases/",
       "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
